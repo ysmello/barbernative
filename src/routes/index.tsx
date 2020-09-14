@@ -18,4 +18,4 @@ const AuthRoutes: React.FC = () => (
   </Auth.Navigator>
 )
 
-export default AuthRoutes
+export default AuthRoutes;
