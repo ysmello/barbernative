@@ -44,8 +44,6 @@ const SignIn: React.FC = () => {
 
   const { signIn, user } = useAuth();
 
-  console.log(user);
-
   const handleSignIn = useCallback(async (data: Credentials) => {
     try {
       formRef.current?.setErrors({});
