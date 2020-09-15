@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useCallback, useRef } from 'react';
 import { Image, View, KeyboardAvoidingView, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native';
+
+import { FormHandles } from '@unform/core';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
@@ -15,10 +17,16 @@ import {
   ForgotPasswordText,
   CreateAccountButton,
   CreateAccountButtonText,
+  FormStyled,
 } from './styles';
 
 const SignIn: React.FC = () => {
-  const navigation = useNavigation()
+  const formRef = useRef<FormHandles>(null);
+  const navigation = useNavigation();
+
+  const handleSignIn = useCallback((data: object) => {
+    console.log(data);
+  }, []);
 
   return (
     <KeyboardAvoidingView enabled style={{ flex: 1 }}>
@@ -33,10 +41,14 @@ const SignIn: React.FC = () => {
             <Title>Faça seu logon</Title>
           </View>
 
-          <Input name="email" icon="mail" placeholder="E-mail" />
-          <Input name="password" icon="lock" placeholder="Senha" />
+          <FormStyled onSubmit={handleSignIn} ref={formRef}>
+            <Input name="email" icon="mail" placeholder="E-mail" />
+            <Input name="password" icon="lock" placeholder="Senha" />
 
-          <Button onPress={() => console.log('testes')}>Entrar</Button>
+            <Button onPress={() => formRef.current?.submitForm()}>
+              Entrar
+            </Button>
+          </FormStyled>
 
           <ForgotPassword>
             <ForgotPasswordText>Esqueci minha senha</ForgotPasswordText>
